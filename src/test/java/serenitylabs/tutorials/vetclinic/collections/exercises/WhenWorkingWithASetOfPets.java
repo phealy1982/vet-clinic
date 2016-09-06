@@ -5,13 +5,18 @@ import org.junit.Test;
 
 import java.util.Set;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+
 public class WhenWorkingWithASetOfPets {
 
     @Test
     public void should_add_Fido_to_the_set_of_pets() {
         Set<String> names = Sets.newHashSet();
 
-        // TODO
+        names.add("Fido");
+
+        assertThat(names).contains("Fido");
     }
 
     @Test
@@ -22,7 +27,9 @@ public class WhenWorkingWithASetOfPets {
         names.add("Felix");
         names.add("Fido");
 
-        // TODO
+        assertThat(names).containsOnlyOnce("Felix", "Fido");
+
+
     }
 
     @Test
@@ -31,7 +38,8 @@ public class WhenWorkingWithASetOfPets {
 
         names.addAll(Sets.newHashSet("Felix","Spot"));
 
-        // TODO
+        assertThat(names).containsOnlyOnce("Felix", "Spot", "Fido");
+
     }
 
 

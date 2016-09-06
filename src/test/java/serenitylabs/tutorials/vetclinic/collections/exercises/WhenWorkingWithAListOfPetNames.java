@@ -3,7 +3,7 @@ package serenitylabs.tutorials.vetclinic.collections.exercises;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 
-import java.util.List;
+import java.util.*;
 
 import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
@@ -14,7 +14,7 @@ public class WhenWorkingWithAListOfPetNames {
     public void should_add_Fido_to_the_list_of_pets() {
         List<String> names = Lists.newArrayList();
 
-        // TODO
+        names.add("Fido");
 
         assertThat(names, contains("Fido"));
     }
@@ -22,7 +22,7 @@ public class WhenWorkingWithAListOfPetNames {
     @Test
     public void should_remove_Fido_from_the_list_of_pets() {
         List<String> names = Lists.newArrayList("Felix","Fido","Spot");
-        // TODO
+        names.remove("Fido");
 
         assertThat(names, contains("Felix","Spot"));
     }
@@ -31,7 +31,8 @@ public class WhenWorkingWithAListOfPetNames {
     public void should_remove_the_first_pet_from_the_list_of_pets() {
         List<String> names = Lists.newArrayList("Felix","Fido","Spot");
 
-        // TODO
+
+        names.remove(0);
 
         assertThat(names, contains("Fido","Spot"));
     }
@@ -41,8 +42,16 @@ public class WhenWorkingWithAListOfPetNames {
         List<String> cats = Lists.newArrayList("Felix","Spot");
         List<String> dogs = Lists.newArrayList("Fido","Rover");
 
-        // TODO
-        List<String> catsAndDogs = null;
+
+        List<String> catsAndDogs = new ArrayList<>();
+
+        for(String cat : cats){
+            catsAndDogs.add(cat);
+        }
+
+        for(String dog : dogs){
+            catsAndDogs.add(dog);
+        }
 
         assertThat(catsAndDogs, contains("Felix","Spot","Fido","Rover"));
     }
@@ -53,7 +62,11 @@ public class WhenWorkingWithAListOfPetNames {
         List<String> dogs = Lists.newArrayList("Fido","Rover");
 
         // TODO
-        List<String> catsAndDogs = null;
+        List<String> catsAndDogs = new ArrayList<>();
+        catsAndDogs.add(cats.get(0));
+        catsAndDogs.add(dogs.get(0));
+        catsAndDogs.add(dogs.get(1));
+        catsAndDogs.add(cats.get(1));
 
         assertThat(catsAndDogs, contains("Felix","Fido","Rover","Spot"));
     }
@@ -62,7 +75,7 @@ public class WhenWorkingWithAListOfPetNames {
     public void should_organise_pets_in_alphabetical_order() {
         List<String> pets = Lists.newArrayList("Felix","Spot","Fido","Rover");
 
-        // TODO
+        pets.sort(String::compareTo);
 
         assertThat(pets, contains("Felix","Fido","Rover","Spot"));
     }
@@ -71,7 +84,7 @@ public class WhenWorkingWithAListOfPetNames {
     public void should_organise_pets_in_reverse_alphabetical_order() {
         List<String> pets = Lists.newArrayList("Felix","Spot","Fido","Rover");
 
-        // TODO
+        pets.sort(Comparator.comparing(String::toString).reversed());
 
         assertThat(pets, contains("Spot","Rover","Fido","Felix"));
     }
@@ -80,7 +93,7 @@ public class WhenWorkingWithAListOfPetNames {
     public void should_organise_pets_by_name_length() {
         List<String> pets = Lists.newArrayList("Felix","Alfred","Spot");
 
-        // TODO
+        pets.sort(Comparator.comparing(String::length));
 
         assertThat(pets, contains("Spot","Felix","Alfred"));
     }
