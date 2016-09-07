@@ -9,16 +9,25 @@ import java.util.*;
  */
 public class PetHotel {
 
+    public final static Integer HOTEL_CAPACITY = 20;
+
     Map<String, Pet> pets = new TreeMap<>();
 
+    Queue<Pet> waitingList = new LinkedList<>();
 
     public Map<String, Pet> getPets() {
         return pets;
     }
 
     public BookingResponse checkIn(Pet pet) {
-        pets.put(pet.getName(), pet);
-        return null;
+
+        if(pets.size()<HOTEL_CAPACITY){
+            pets.put(pet.getName(), pet);
+            return new BookingResponse(Math.random(), pet, true, false);
+        } else {
+            waitingList.add(pet);
+            return new BookingResponse(Math.random(), pet, false, true);
+        }
     }
 
     public List<Pet> getPetsInAlphabethicalOrder(){
@@ -33,5 +42,18 @@ public class PetHotel {
 
         return sortedPets;
 
+    }
+
+    public void checkout(String petName) {
+        Pet petToCheckOut = pets.get(petName);
+
+        if(petToCheckOut != null){
+            pets.remove(petName);
+        }
+
+        if(waitingList.peek() != null){
+            Pet petFromWaitingList = waitingList.poll();
+            pets.put(petFromWaitingList.getName(), petFromWaitingList);
+        }
     }
 }
