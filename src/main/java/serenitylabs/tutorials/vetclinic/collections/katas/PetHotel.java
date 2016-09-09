@@ -9,29 +9,5 @@ import java.util.*;
  */
 public class PetHotel {
 
-    Map<String, Pet> pets = new TreeMap<>();
 
-
-    public Map<String, Pet> getPets() {
-        return pets;
-    }
-
-    public BookingResponse checkIn(Pet pet) {
-        pets.put(pet.getName(), pet);
-        return null;
-    }
-
-    public List<Pet> getPetsInAlphabethicalOrder(){
-
-        List<Pet> sortedPets = new ArrayList<>();
-
-        for(Pet pet : pets.values()){
-            sortedPets.add(pet);
-        }
-
-        Collections.sort(sortedPets, Comparator.comparing(Pet::getName));
-
-        return sortedPets;
-
-    }
 }
