@@ -5,7 +5,7 @@ import serenitylabs.tutorials.vetclinic.Pet;
 /**
  * Created by 66515 on 06/09/2016.
  */
-public class BookingResponse {
+public class BookingResponse implements Booking {
 
     Double bookingNumber;
     Pet pet;
@@ -19,18 +19,22 @@ public class BookingResponse {
         this.onWaitingList = onWaitingList;
     }
 
+    @Override
     public Boolean isConfirmed(){
         return confirmed;
     }
 
+    @Override
     public Double getBookingNumber() {
         return bookingNumber;
     }
 
+    @Override
     public Pet getPet() {
         return pet;
     }
 
+    @Override
     public Boolean isOnWaitingList(){
         return onWaitingList;
     }

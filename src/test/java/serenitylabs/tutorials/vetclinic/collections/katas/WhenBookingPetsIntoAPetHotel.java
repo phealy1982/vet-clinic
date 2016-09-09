@@ -80,7 +80,7 @@ public class WhenBookingPetsIntoAPetHotel {
 
         Pet xavier = Pet.dog().named("Xavier");
 
-        BookingResponse bookingResponse = petHotel.checkIn(xavier);
+        Booking bookingResponse = petHotel.checkIn(xavier);
 
         assertThat(bookingResponse.getPet()).isEqualTo(xavier);
         assertThat(bookingResponse.getBookingNumber()).isNotNull();
@@ -94,7 +94,7 @@ public class WhenBookingPetsIntoAPetHotel {
 
         assertThat(hotelAtCapacity.getPets().size()).isEqualTo(PetHotel.HOTEL_CAPACITY);
 
-        BookingResponse bookingResponse =hotelAtCapacity.checkIn(Pet.dog().named("Fido"));
+        Booking bookingResponse =hotelAtCapacity.checkIn(Pet.dog().named("Fido"));
 
         assertThat(hotelAtCapacity.getPets().size()).isEqualTo(PetHotel.HOTEL_CAPACITY);
         assertThat(bookingResponse.isConfirmed()).isFalse();
@@ -106,7 +106,7 @@ public class WhenBookingPetsIntoAPetHotel {
 
         assertThat(hotelAtCapacity.getPets().size()).isEqualTo(PetHotel.HOTEL_CAPACITY);
 
-        BookingResponse bookingResponse =hotelAtCapacity.checkIn(Pet.dog().named("Fido"));
+        Booking bookingResponse =hotelAtCapacity.checkIn(Pet.dog().named("Fido"));
 
         assertThat(bookingResponse.isConfirmed()).isFalse();
 
@@ -118,7 +118,7 @@ public class WhenBookingPetsIntoAPetHotel {
 
         assertThat(hotelAtCapacity.getPets().size()).isEqualTo(PetHotel.HOTEL_CAPACITY);
 
-        BookingResponse bookingResponse =hotelAtCapacity.checkIn(Pet.dog().named("Fido"));
+        Booking bookingResponse =hotelAtCapacity.checkIn(Pet.dog().named("Fido"));
 
         assertThat(bookingResponse.isOnWaitingList()).isTrue();
     }
@@ -152,4 +152,17 @@ public class WhenBookingPetsIntoAPetHotel {
 
     }
 
+    @Test
+    public void should_take_two_pets_from_waiting_list() throws Exception {
+
+        hotelAtCapacity.checkIn(Pet.dog().named("Fido"));
+        hotelAtCapacity.checkIn(Pet.dog().named("Spot"));
+
+        hotelAtCapacity.checkout("RoverClone1");
+        hotelAtCapacity.checkout("RoverClone2");
+
+        assertThat(hotelAtCapacity.getPetsInAlphabethicalOrder()).contains(Pet.dog().named("Fido"));
+        assertThat(hotelAtCapacity.getPetsInAlphabethicalOrder()).contains(Pet.dog().named("Spot"));
+
+    }
 }

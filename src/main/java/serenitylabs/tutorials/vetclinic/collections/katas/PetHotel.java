@@ -19,41 +19,44 @@ public class PetHotel {
         return pets;
     }
 
-    public BookingResponse checkIn(Pet pet) {
+    public Booking checkIn(Pet pet) {
+        return  hasCapacity()
+                ? createReservation(pet)
+                : addPetToWaitingList(pet);
+    }
 
-        if(pets.size()<HOTEL_CAPACITY){
-            pets.put(pet.getName(), pet);
-            return new BookingResponse(Math.random(), pet, true, false);
-        } else {
-            waitingList.add(pet);
-            return new BookingResponse(Math.random(), pet, false, true);
-        }
+    private boolean hasCapacity() {
+        return pets.size()<HOTEL_CAPACITY;
+    }
+
+    private Booking createReservation(Pet pet) {
+        pets.put(pet.getName(), pet);
+        return new BookingConfirmed(Math.random(), pet);
+    }
+
+    private Booking addPetToWaitingList(Pet pet) {
+        waitingList.add(pet);
+        return new BookingOnWaitingList(Math.random(), pet);
     }
 
     public List<Pet> getPetsInAlphabethicalOrder(){
-
-        List<Pet> sortedPets = new ArrayList<>();
-
-        for(Pet pet : pets.values()){
-            sortedPets.add(pet);
-        }
-
-        Collections.sort(sortedPets, Comparator.comparing(Pet::getName));
-
-        return sortedPets;
-
+        return new ArrayList<>(pets.values());
     }
 
     public void checkout(String petName) {
-        Pet petToCheckOut = pets.get(petName);
+        pets.remove(petName);
+        checkInNextOnWaitingList();
+    }
 
-        if(petToCheckOut != null){
-            pets.remove(petName);
-        }
-
-        if(waitingList.peek() != null){
-            Pet petFromWaitingList = waitingList.poll();
-            pets.put(petFromWaitingList.getName(), petFromWaitingList);
+    private void checkInNextOnWaitingList() {
+        if(petOnWaitingList()){
+            checkIn(waitingList.poll());
         }
     }
+
+    private boolean petOnWaitingList() {
+        return !waitingList.isEmpty();
+    }
+
+
 }
