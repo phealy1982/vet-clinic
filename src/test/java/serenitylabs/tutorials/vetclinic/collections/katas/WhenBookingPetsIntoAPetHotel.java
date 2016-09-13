@@ -124,4 +124,32 @@ public class WhenBookingPetsIntoAPetHotel {
 
     }
 
+    @Test
+    public void should_create_unique_booking_number() throws Exception {
+
+        BookingResponse fidoResponse = newPetHotel.checkIn(Pet.dog().named("Fido"));
+        BookingResponse roverResponse = newPetHotel.checkIn(Pet.dog().named("Rover"));
+
+        assertThat(fidoResponse.getBookingNumber()).isNotEqualTo(roverResponse.getBookingNumber());
+
+
+    }
+
+    @Test
+    public void should_booking_number_should_remain_the_same() throws Exception {
+
+        BookingResponse fidoResponse = newPetHotel.checkIn(Pet.dog().named("Fido"));
+
+        assertThat(fidoResponse.getBookingNumber()).isEqualTo(fidoResponse.getBookingNumber());
+
+    }
+
+    @Test
+    public void should_return_on_waiting_list_false_when_booking_successful() throws Exception {
+
+        BookingResponse fidoResponse = newPetHotel.checkIn(Pet.dog().named("Fido"));
+
+        assertThat(fidoResponse.isOnWaitingList()).isFalse();
+
+    }
 }

@@ -11,9 +11,12 @@ public class BookingConfirmed implements BookingResponse{
 
 
     private Pet pet;
+    private Integer bookingNumber;
+
 
     public BookingConfirmed(Pet pet) {
         this.pet = pet;
+        this.bookingNumber = BookingNumber.getNextBookingNumber();
     }
 
     @Override public Boolean isConfirmed() {
@@ -21,11 +24,11 @@ public class BookingConfirmed implements BookingResponse{
     }
 
     @Override public Boolean isOnWaitingList() {
-        return null;
+        return false;
     }
 
     @Override public Integer getBookingNumber() {
-        return BookingNumber.getNextBookingNumber();
+        return bookingNumber;
     }
 
     @Override public Pet getPet() {
