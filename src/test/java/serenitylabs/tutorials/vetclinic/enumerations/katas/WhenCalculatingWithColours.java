@@ -1,6 +1,7 @@
 package serenitylabs.tutorials.vetclinic.enumerations.katas;
 
 import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import serenitylabs.tutorials.vetclinic.enumerations.colours.Colour;
@@ -23,31 +24,52 @@ public class WhenCalculatingWithColours {
 
         assertThat(colours)
                 .contains("Red", "Orange", "Yellow", "Green", "Blue", "Violet", "Black", "White");
-
     }
 
-    @Test public void should_know_primary_colours() throws Exception {
-        assertThat(Colour.Red.isPrimary()).isTrue();
-        assertThat(Colour.Yellow.isPrimary()).isTrue();
-        assertThat(Colour.Blue.isPrimary()).isTrue();
-
+    @Test
+    @Parameters({
+            "Red",
+            "Yellow",
+            "Blue"})
+    public void should_know_primary_colours(Colour colour) throws Exception {
+        assertThat(colour.isPrimary()).isTrue();
     }
 
-    @Test public void should_know_when_colours_are_not_primary() throws Exception {
-        assertThat(Colour.Orange.isPrimary()).isFalse();
-        assertThat(Colour.Green.isPrimary()).isFalse();
-        assertThat(Colour.Violet.isPrimary()).isFalse();
-        assertThat(Colour.Black.isPrimary()).isFalse();
-        assertThat(Colour.White.isPrimary()).isFalse();
+    @Test
+    @Parameters({
+            "Orange",
+            "Green",
+            "Violet",
+            "White",
+            "Black"})
+    public void should_know_when_colours_are_not_primary(Colour colour) throws Exception {
+        assertThat(colour.isPrimary()).isFalse();
     }
 
-    @Test public void should_know_each_colours_opposite() throws Exception {
-        assertThat(Colour.Red.opposite()).isEqualTo(Colour.Green);
-        assertThat(Colour.Orange.opposite()).isEqualTo(Colour.Violet);
-        assertThat(Colour.Yellow.opposite()).isEqualTo(Colour.Blue);
-        assertThat(Colour.Green.opposite()).isEqualTo(Colour.Red);
-        assertThat(Colour.Blue.opposite()).isEqualTo(Colour.Yellow);
-        assertThat(Colour.Black.opposite()).isEqualTo(Colour.White);
-        assertThat(Colour.White.opposite()).isEqualTo(Colour.Black);
+    @Test
+    @Parameters({"Red, Green",
+            "Orange, Violet",
+            "Yellow, Blue",
+            "Black, White",
+            "Green, Red",
+            "Violet, Orange",
+            "Blue, Yellow",
+            "White, Black"})
+    public void should_know_each_colours_opposite(Colour colour, Colour opposite) throws Exception {
+        assertThat(colour.opposite()).isEqualTo(opposite);
+    }
+
+    @Test
+    @Parameters({"Red",
+            "Orange",
+            "Yellow",
+            "Black",
+            "Green",
+            "Violet",
+            "Blue",
+            "White"})
+    public void opposite_colours_should_be_symmetric(Colour colour) throws Exception {
+        assertThat(colour.opposite().opposite()).isEqualTo(colour);
+
     }
 }
