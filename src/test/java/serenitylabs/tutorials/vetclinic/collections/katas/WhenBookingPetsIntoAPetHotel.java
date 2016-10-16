@@ -1,5 +1,6 @@
 package serenitylabs.tutorials.vetclinic.collections.katas;
 
+import org.junit.Before;
 import org.junit.Test;
 import serenitylabs.tutorials.vetclinic.Pet;
 
@@ -8,10 +9,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class WhenBookingPetsIntoAPetHotel {
 
     public static final int CAPACITY = 20;
-    private PetHotel petHotel = new PetHotel();
+    private PetHotel petHotel;
     private Pet fido = Pet.dog().named("Fido");
     private Pet rover = Pet.dog().named("Rover");
-    private PetHotel petHotelAtCapacity = hotelAtCapacity();
+    private PetHotel petHotelAtCapacity;
+
+    @Before
+    public void before(){
+        petHotel= new PetHotel();
+        petHotelAtCapacity = hotelAtCapacity();
+    }
 
     @Test
     public void the_hotel_should_initially_have_no_pets_booked() {
