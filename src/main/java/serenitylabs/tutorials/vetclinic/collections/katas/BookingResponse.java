@@ -5,12 +5,10 @@ import serenitylabs.tutorials.vetclinic.Pet;
 /**
  * Created by 66515 on 06/09/2016.
  */
-public class BookingResponse {
+public interface BookingResponse {
 
-    Integer bookingNumber;
-    Pet pet;
-    Boolean confirmed;
-
-
-
+    boolean isConfirmed();
+    boolean isOnWaitingList();
+    Integer bookingNumber();
+    Pet pet();
 }
